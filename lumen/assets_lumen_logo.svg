@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Lumen logo">
+  <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#7c3aed"/><stop offset="1" stop-color="#06b6d4"/></linearGradient></defs>
+  <rect width="512" height="512" rx="120" fill="#0b1020"/>
+  <path d="M256 74c-83 0-150 67-150 150 0 54 29 102 73 128v58c0 14 11 25 25 25h104c14 0 25-11 25-25v-58c44-26 73-74 73-128 0-83-67-150-150-150z" fill="url(#g)"/>
+  <path d="M202 365h108M207 398h98" stroke="#fff" stroke-width="18" stroke-linecap="round" opacity=".95"/>
+  <path d="M256 118v102m-54-48 54 48 54-48" fill="none" stroke="#fff" stroke-width="18" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

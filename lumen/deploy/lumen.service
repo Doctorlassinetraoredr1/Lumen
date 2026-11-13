@@ -1,0 +1,30 @@
+[Unit]
+Description=Lumen General Purpose AI API
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=lumen
+Group=lumen
+WorkingDirectory=/opt/lumen
+EnvironmentFile=/opt/lumen/.env
+ExecStart=/opt/lumen/bin/Lumen serve 8080
+Restart=on-failure
+RestartSec=3
+TimeoutStopSec=15
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectControlGroups=true
+RestrictSUIDSGID=true
+LockPersonality=true
+MemoryDenyWriteExecute=false
+ReadWritePaths=/opt/lumen/data /opt/lumen/models
+LimitNOFILE=65536
+
+[Install]
+WantedBy=multi-user.target
