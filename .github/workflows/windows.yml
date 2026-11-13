@@ -1,0 +1,32 @@
+name: Build Lumen Windows
+on:
+  workflow_dispatch:
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Dépendances
+        run: vcpkg install curl:x64-windows cjson:x64-windows
+      - name: llama.cpp
+        run: git clone --depth 1 https://github.com/ggml-org/llama.cpp.git third_party/llama.cpp
+      - name: Configure
+        run: >
+          cmake -S . -B build -A x64
+          -DLUMEN_USE_LLAMA=ON
+          -DBUILD_SHARED_LIBS=OFF
+          -DGGML_NATIVE=OFF -DGGML_AVX=OFF -DGGML_AVX2=OFF -DGGML_FMA=OFF
+          -DGGML_F16C=OFF -DGGML_AVX512=OFF -DGGML_BMI2=OFF
+          -DCMAKE_TOOLCHAIN_FILE="$env:VCPKG_INSTALLATION_ROOT/scripts/buildsystems/vcpkg.cmake"
+      - name: Build
+        run: cmake --build build --config Release --parallel
+      - name: Package
+        run: |
+          New-Item -ItemType Directory dist
+          Copy-Item build/Release/* dist/ -Recurse
+          Copy-Item scripts/windows/start.ps1 dist/
+          Invoke-WebRequest https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-windows-amd64.exe -OutFile dist/cloudflared.exe
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Lumen-Windows
+          path: dist
